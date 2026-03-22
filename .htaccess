@@ -1,0 +1,13 @@
+Options -Indexes
+
+# Rewrite rules
+RewriteEngine On
+
+# Redirect bare domain to check_bills.php
+RewriteRule ^$ check_bills.php [L]
+
+# Block direct access to sensitive directories
+RewriteRule ^(app|config|bootstrap\.php) - [F,L]
+
+# Allow download folder
+RewriteRule ^download/ - [L]
