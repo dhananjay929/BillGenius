@@ -9,8 +9,10 @@ RUN echo '<Directory /var/www/html>\n\
     Require all granted\n\
 </Directory>' >> /etc/apache2/apache2.conf
 
-# Install mbstring (used by some DISCOM functions)
-RUN docker-php-ext-install mbstring
+# Install system dependency required by mbstring, then install mbstring
+RUN apt-get update && apt-get install -y libonig-dev \
+    && docker-php-ext-install mbstring \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Copy all project files into the web root
 COPY . /var/www/html/
